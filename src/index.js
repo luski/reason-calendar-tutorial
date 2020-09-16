@@ -1,9 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import { make as Calendar } from "./CalendarView.bs";
 
 ReactDOM.render(
   <React.StrictMode>
-    <div>Hello Reason</div>
+    <div>
+      <Calendar />
+    </div>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
