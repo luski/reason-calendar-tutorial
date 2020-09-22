@@ -17,8 +17,12 @@
   "suffix": ".bs.js",
   "namespace": true,
   "bs-dependencies": [
-    "reason-react"
+    "reason-react",
+    "re-classnames"
   ],
   "ppx-flags": [],
-  "refmt": 3
+  "refmt": 3,
+  "warnings": {
+    "number": "-44"
+  }
 }

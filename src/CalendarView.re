@@ -80,35 +80,51 @@ let make = (~locale=?, ~weekStartsOn=?) => {
   let weekStartsOnValue = Belt.Option.getWithDefault(weekStartsOn, 0);
 
   let (date, setDate) = React.useState(Js.Date.make);
-  <div>
-    <button onClick={_ => setDate(_ => DateFns.addMonths(date, -1))}>
-      {React.string("<")}
-    </button>
-    <span>
-      {React.string(
-         DateFns.format(date, "LLLL / yyyy", {locale: localeValue}),
-       )}
-    </span>
-    <button onClick={_ => setDate(_ => DateFns.addMonths(date, 1))}>
-      {React.string(">")}
-    </button>
-    <table>
+  <div className="container font-lato p-2">
+    <div className="flex items-center">
+      <button
+        onClick={_ => setDate(_ => DateFns.addMonths(date, -1))}
+        className="text-white text-xl">
+        {React.string({j|❮|j})}
+      </button>
+      <span
+        className="flex-grow text-yellow font-bold text-center uppercase tracking-widest">
+        {React.string(
+           DateFns.format(date, "LLLL / yyyy", {locale: localeValue}),
+         )}
+      </span>
+      <button
+        onClick={_ => setDate(_ => DateFns.addMonths(date, 1))}
+        className="text-white text-xl">
+        {React.string({j|❯|j})}
+      </button>
+    </div>
+    <table className="w-full capitalize">
       <thead>
         <tr>
           {daysOfWeek(localeValue, weekStartsOnValue)
            ->Belt.Array.map((day: string) =>
-               <th key=day> {React.string(day)} </th>
+               <th key=day className="text-yellow font-bold h-20">
+                 {React.string(day)}
+               </th>
              )
            ->React.array}
         </tr>
+        <tr> <td colSpan=7 className="h-2 bg-white" /> </tr>
       </thead>
       <tbody>
         {daysOfMonth(date, 1)
          ->Belt.Array.mapWithIndex((weekNumber, days) =>
-             <tr key={string_of_int(weekNumber)}>
+             <tr key={string_of_int(weekNumber)} className="h-20 text-white ">
                {days
                 ->Belt.Array.map(({number, isToday, isForeign}) =>
-                    <td key={string_of_int(number)}>
+                    <td
+                      key={string_of_int(number)}
+                      className=Cn.(
+                        "text-center"
+                        + "text-yellow"->on(isToday)
+                        + "text-gray-900"->on(isForeign)
+                      )>
                       {number->string_of_int->React.string}
                     </td>
                   )
@@ -116,6 +132,7 @@ let make = (~locale=?, ~weekStartsOn=?) => {
              </tr>
            )
          ->React.array}
+        <tr> <td colSpan=7 className="h-2 bg-white" /> </tr>
       </tbody>
     </table>
   </div>;
